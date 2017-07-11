@@ -1,0 +1,9 @@
+{
+    "description" : "de-docker-logging-plugin",
+    "documentation" : "https://github.com/cyverse-de/de-docker-logging-plugin",
+    "entrypoint" : ["/usr/bin/de-docker-logging-plugin"],
+    "interface" : {
+        "types" : ["docker.logdriver/1.0"],
+        "socket" : "jsonfile.sock"
+    }
+}
