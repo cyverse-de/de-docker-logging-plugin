@@ -856,6 +856,42 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/gogo/protobuf/io",
+			"repository": "https://github.com/gogo/protobuf",
+			"vcs": "git",
+			"revision": "dda3e8acadcc9affc16faf33fbb229db78399245",
+			"branch": "master",
+			"path": "/io",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/gogo/protobuf/proto",
+			"repository": "https://github.com/gogo/protobuf",
+			"vcs": "git",
+			"revision": "dda3e8acadcc9affc16faf33fbb229db78399245",
+			"branch": "master",
+			"path": "proto",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/gogo/protobuf/sortkeys",
+			"repository": "https://github.com/gogo/protobuf",
+			"vcs": "git",
+			"revision": "dda3e8acadcc9affc16faf33fbb229db78399245",
+			"branch": "master",
+			"path": "sortkeys",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/gogo/protobuf/types",
+			"repository": "https://github.com/gogo/protobuf",
+			"vcs": "git",
+			"revision": "dda3e8acadcc9affc16faf33fbb229db78399245",
+			"branch": "master",
+			"path": "types",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/golang/protobuf/proto",
 			"repository": "https://github.com/golang/protobuf",
 			"vcs": "git",
@@ -882,6 +918,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/tonistiigi/fifo",
+			"repository": "https://github.com/tonistiigi/fifo",
+			"vcs": "git",
+			"revision": "69b99525e472735860a5269b75af1970142b3062",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "golang.org/x/net/context",
 			"repository": "https://go.googlesource.com/net",
 			"vcs": "git",
@@ -897,6 +941,15 @@
 			"revision": "054b33e6527139ad5b1ec2f6232c3b175bd9a30c",
 			"branch": "master",
 			"path": "/proxy",
+			"notests": true
+		},
+		{
+			"importpath": "golang.org/x/sys/unix",
+			"repository": "https://go.googlesource.com/sys",
+			"vcs": "git",
+			"revision": "abf9c25f54453410d0c6668e519582a9e1115027",
+			"branch": "master",
+			"path": "/unix",
 			"notests": true
 		},
 		{

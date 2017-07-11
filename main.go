@@ -8,7 +8,7 @@ import (
 
 func main() {
 	sdkhandler := sdk.NewHandler(`{"Implements": ["LoggingDriver"]}`)
-	inithandlers(&sdkhandler, &FakeDriver{})
+	inithandlers(&sdkhandler, NewFileDriver())
 
 	if err := sdkhandler.ServeUnix("jsonfile", 0); err != nil {
 		log.Fatal(err)
