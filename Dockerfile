@@ -1,5 +1,7 @@
 FROM alpine
 
+RUN mkdir -p /run/docker/plugins /var/log/de-docker-logging-plugin
+
 COPY de-docker-logging-plugin de-docker-logging-plugin
 
 ARG git_commit=unknown

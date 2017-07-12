@@ -102,13 +102,25 @@ func (l *FileLogger) StreamMessages() {
 type FileDriver struct {
 	mu     sync.Mutex
 	logmap map[string]*FileLogger
+	base   string
 }
 
 // NewFileDriver returns a newly created *FileDriver.
-func NewFileDriver() *FileDriver {
+func NewFileDriver() (*FileDriver, error) {
+	basepath := "/var/log/de-docker-logging-plugin"
+	_, err := os.Stat(basepath)
+	if os.IsNotExist(err) {
+		if err = os.MkdirAll(basepath, 0755); err != nil {
+			return nil, errors.Wrapf(err, "error creating directory %s", basepath)
+		}
+	}
+	if err != nil {
+		return nil, errors.Wrapf(err, "error stat'ing %s", basepath)
+	}
 	return &FileDriver{
 		logmap: make(map[string]*FileLogger),
-	}
+		base:   basepath,
+	}, nil
 }
 
 // StartLogging sets up everything needed for logging to separate files for
@@ -130,16 +142,24 @@ func (d *FileDriver) StartLogging(fifopath string, loginfo logger.Info) error {
 		return fmt.Errorf("'stdout' path missing from the plugin configuration")
 	}
 
-	stderrPath := loginfo.Config["stderr"]
-	stdoutPath := loginfo.Config["stdout"]
+	baseDir := d.base
+
+	stderrPath := path.Join(baseDir, loginfo.Config["stderr"])
+	stdoutPath := path.Join(baseDir, loginfo.Config["stdout"])
 
 	stderrBase := path.Base(stderrPath)
 	stdoutBase := path.Base(stdoutPath)
 
 	for _, p := range []string{stderrBase, stdoutBase} {
 		pinfo, err := os.Stat(p)
+		if os.IsNotExist(err) {
+			if err = os.MkdirAll(p, 0755); err != nil {
+				return errors.Wrapf(err, "error creating %s", p)
+			}
+			continue
+		}
 		if err != nil {
-			return errors.Wrapf(err, "error stating path %s", p)
+			return errors.Wrapf(err, "error stat'ing path %s", p)
 		}
 		if !pinfo.IsDir() {
 			return errors.Wrapf(err, "path was not a directory %s", p)

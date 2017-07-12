@@ -7,10 +7,19 @@ import (
 )
 
 func main() {
-	var err error
+	// TODO: Write a REAME detailing how to develop, build, configure, & deploy.
+	var (
+		err error
+	)
+
 	pluginName := "delogplugin"
+
 	sdkhandler := sdk.NewHandler(`{"Implements": ["LoggingDriver"]}`)
-	inithandlers(&sdkhandler, NewFileDriver())
+	driver, err := NewFileDriver()
+	if err != nil {
+		log.Fatal(err)
+	}
+	inithandlers(&sdkhandler, driver)
 
 	if err = sdkhandler.ServeUnix(pluginName, 0); err != nil {
 		log.Fatal(err)
