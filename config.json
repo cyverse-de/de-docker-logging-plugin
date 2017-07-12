@@ -1,9 +1,9 @@
 {
-    "description" : "de-docker-logging-plugin",
+    "description" : "A Docker logging plugin for the Discovery Environment job execution platform.",
     "documentation" : "https://github.com/cyverse-de/de-docker-logging-plugin",
-    "entrypoint" : ["/usr/bin/de-docker-logging-plugin"],
+    "entrypoint" : ["/de-docker-logging-plugin"],
     "interface" : {
         "types" : ["docker.logdriver/1.0"],
-        "socket" : "jsonfile.sock"
+        "socket" : "delogplugin.sock"
     }
 }

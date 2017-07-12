@@ -7,10 +7,13 @@ import (
 )
 
 func main() {
+	var err error
+	pluginName := "delogplugin"
 	sdkhandler := sdk.NewHandler(`{"Implements": ["LoggingDriver"]}`)
 	inithandlers(&sdkhandler, NewFileDriver())
 
-	if err := sdkhandler.ServeUnix("jsonfile", 0); err != nil {
+	if err = sdkhandler.ServeUnix(pluginName, 0); err != nil {
 		log.Fatal(err)
 	}
+
 }
