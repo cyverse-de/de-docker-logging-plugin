@@ -50,6 +50,8 @@ type FileLogger struct {
 	LogStream  io.ReadCloser
 }
 
+// StreamMessages will consume logging messages sent from Docker to the FIFO
+// stream and write them out to the configured log files.
 func (l *FileLogger) StreamMessages() {
 	reader := protoio.NewUint32DelimitedReader(l.LogStream, binary.BigEndian, 1e6)
 	defer reader.Close()
