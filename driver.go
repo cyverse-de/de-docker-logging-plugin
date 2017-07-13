@@ -71,7 +71,7 @@ func (l *FileLogger) StreamMessages() {
 		}
 
 		msg := logger.Message{
-			Line:      entry.Line,
+			Line:      append(entry.Line, []byte("\n")...),
 			Source:    entry.Source,
 			Partial:   entry.Partial,
 			Timestamp: time.Unix(0, entry.TimeNano),
