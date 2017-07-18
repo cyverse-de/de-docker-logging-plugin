@@ -149,8 +149,8 @@ func (d *FileDriver) StartLogging(fifopath string, loginfo logger.Info) error {
 	stderrPath := path.Join(baseDir, loginfo.Config["stderr"])
 	stdoutPath := path.Join(baseDir, loginfo.Config["stdout"])
 
-	stderrBase := path.Base(stderrPath)
-	stdoutBase := path.Base(stdoutPath)
+	stderrBase := path.Dir(stderrPath)
+	stdoutBase := path.Dir(stdoutPath)
 
 	for _, p := range []string{stderrBase, stdoutBase} {
 		pinfo, err := os.Stat(p)
