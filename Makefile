@@ -37,6 +37,7 @@ create:
 
 enable:
 	@echo "### Enabling the ${PLUGIN_NAME}:${PLUGIN_TAG} plugin"
+	@mkdir -p /var/log/de-docker-logging-plugin/
 	@docker plugin enable ${PLUGIN_NAME}:${PLUGIN_TAG}
 
 push: clean docker rootfs create enable
