@@ -4,9 +4,14 @@ node('docker') {
     try {
         stage "Build Plugin"
         checkout scm
+        
         sh "make clean"
 
-        sh "make all"
+        sh "make docker"
+
+        sh "make rootfs"
+
+        sh "make create"
 
         stage "Push Plugin"
         sh "make push"
