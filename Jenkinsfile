@@ -4,7 +4,7 @@ node('docker') {
     try {
         stage "Push Plugin"
         checkout scm
-        sh "make push"
+        sh "make push PLUGIN_TAG=${env.BRANCH_NAME}"
     } catch (InterruptedException e) {
         currentBuild.result = "ABORTED"
         slackSend color: 'warning', message: "ABORTED: ${slackJobDescription}"
