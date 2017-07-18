@@ -6,9 +6,6 @@ node('docker') {
         checkout scm
         sh "make all"
 
-        stage "Enable Plugin"
-        sh "make enable"
-
         stage "Push Plugin"
         sh "make push"
     } catch (InterruptedException e) {
