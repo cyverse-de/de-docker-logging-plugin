@@ -4,6 +4,8 @@ node('docker') {
     try {
         stage "Build Plugin"
         checkout scm
+        sh "make clean"
+
         sh "make all"
 
         stage "Push Plugin"
