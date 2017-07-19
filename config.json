@@ -15,6 +15,9 @@
         "type" : "none",
         "options" : [
           "bind"
+        ],
+        "settable" : [
+          "source"
         ]
       }
     ]
