@@ -8,6 +8,8 @@ import (
 	"log"
 	"os"
 	"path"
+	"strconv"
+	"strings"
 	"sync"
 	"syscall"
 	"time"
@@ -146,6 +148,15 @@ func (d *FileDriver) StartLogging(fifopath string, loginfo logger.Info) error {
 
 	baseDir := d.base
 
+	gid, err := strconv.Atoi(os.Getenv("gid"))
+	if err != nil {
+		return errors.Wrap(err, "failed to convert the gid env var to an int")
+	}
+	uid, err := strconv.Atoi(os.Getenv("uid"))
+	if err != nil {
+		return errors.Wrap(err, "failed to convert the uid env var to an int")
+	}
+
 	stderrPath := path.Join(baseDir, loginfo.Config["stderr"])
 	stdoutPath := path.Join(baseDir, loginfo.Config["stdout"])
 
@@ -168,14 +179,33 @@ func (d *FileDriver) StartLogging(fifopath string, loginfo logger.Info) error {
 		}
 	}
 
+	for _, p := range []string{loginfo.Config["stderr"], loginfo.Config["stdout"]} {
+		acc := baseDir
+		parentdir := path.Dir(p)
+		for _, d := range strings.Split(parentdir, string(os.PathSeparator)) {
+			if d != "" {
+				acc = path.Join(acc, d)
+				if err = os.Chown(acc, uid, gid); err != nil {
+					return errors.Wrapf(err, "failed to chown %s to %d:%d", acc, uid, gid)
+				}
+			}
+		}
+	}
+
 	stderr, err := os.Create(stderrPath)
 	if err != nil {
 		return errors.Wrapf(err, "error opening stderr log file at %s", stderrBase)
+	}
+	if err = stderr.Chown(uid, gid); err != nil {
+		return errors.Wrapf(err, "failed to chown %s to %d:%d", stderrPath, uid, gid)
 	}
 
 	stdout, err := os.Create(stdoutPath)
 	if err != nil {
 		return errors.Wrapf(err, "error opening stdout log file at %s", stdoutBase)
+	}
+	if err = stdout.Chown(uid, gid); err != nil {
+		return errors.Wrapf(err, "failed to chown %s to %d:%d", stdoutPath, uid, gid)
 	}
 
 	f, err := fifo.OpenFifo(context.Background(), fifopath, syscall.O_RDONLY, 0700)
