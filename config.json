@@ -33,7 +33,7 @@
         "destination" : "/var/log/de-docker-logging-plugin/",
         "type" : "none",
         "options" : [
-          "bind"
+          "rbind"
         ],
         "settable" : [
           "source"
