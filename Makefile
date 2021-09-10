@@ -1,6 +1,6 @@
 # Shamelessly adapted from the Makefile at vieux/docker-volume-sshfs
 
-PLUGIN_NAME=discoenv/de-docker-logging-plugin
+PLUGIN_NAME=harbor.cyverse.org/de/de-docker-logging-plugin
 PLUGIN_TAG=latest
 
 all: clean docker rootfs create
