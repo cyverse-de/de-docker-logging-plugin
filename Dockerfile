@@ -1,8 +1,23 @@
+FROM golang:1.18 as build-root
+
+WORKDIR /build
+
+COPY go.mod .
+COPY go.sum .
+
+COPY . .
+
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+ENV GOARCH=amd64
+
+RUN go build -v -o de-docker-logging-plugin
+
 FROM alpine
 
 RUN mkdir -p /run/docker/plugins /var/log/de-docker-logging-plugin
 
-COPY de-docker-logging-plugin de-docker-logging-plugin
+COPY --from=build-root /build/de-docker-logging-plugin /de-docker-logging-plugin
 
 ARG git_commit=unknown
 ARG version="2.9.0"

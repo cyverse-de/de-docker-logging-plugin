@@ -10,13 +10,6 @@ clean:
 	@rm -rf ./plugin
 
 docker:
-	@echo "### Building the plugin binary"
-	@docker build -t builder -f Dockerfile.binary .
-	@echo "### Copy the plugin binary"
-	@docker create --name tmp builder
-	@docker cp tmp:/go/bin/de-docker-logging-plugin .
-	@docker rm -fv tmp
-	@docker rmi builder
 	@echo "### Create the rootfs image"
 	@docker build -t ${PLUGIN_NAME}:rootfs .
 
