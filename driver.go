@@ -14,11 +14,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/containerd/fifo"
 	"github.com/docker/docker/api/types/plugins/logdriver"
 	"github.com/docker/docker/daemon/logger"
 	protoio "github.com/gogo/protobuf/io"
 	"github.com/pkg/errors"
-	"github.com/tonistiigi/fifo"
 )
 
 // LoggingDriver defines the interface for types that want to be a Docker logging
@@ -75,7 +75,6 @@ func (l *FileLogger) StreamMessages() {
 		msg := logger.Message{
 			Line:      append(entry.Line, []byte("\n")...),
 			Source:    entry.Source,
-			Partial:   entry.Partial,
 			Timestamp: time.Unix(0, entry.TimeNano),
 		}
 
