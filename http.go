@@ -40,7 +40,7 @@ func respond(err error, w http.ResponseWriter) {
 	if err != nil {
 		r.Err = err.Error()
 	}
-	json.NewEncoder(w).Encode(&r)
+	_ = json.NewEncoder(w).Encode(&r)
 }
 
 func inithandlers(h *sdk.Handler, d LoggingDriver) {
@@ -76,7 +76,7 @@ func inithandlers(h *sdk.Handler, d LoggingDriver) {
 	})
 
 	h.HandleFunc("/LogDriver.Capabilities", func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(&CapabilitiesResponse{
+		_ = json.NewEncoder(w).Encode(&CapabilitiesResponse{
 			Cap: logger.Capability{ReadLogs: false},
 		})
 	})
